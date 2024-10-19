@@ -1,0 +1,40 @@
+package Selenium;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class SelMain {
+
+    static WebDriver driver;
+
+    @BeforeAll
+    static void setUp() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver(); // Inicjalizacja drivera w `setUp`
+    }
+
+    @Test
+    void simpleTest() {
+        driver.get("https://www.selenium.dev/");
+        String pageSource = driver.getCurrentUrl();
+        System.out.println(pageSource);
+        Helpers.takeScreenshot();
+    }
+
+    // Zamknięcie drivera po zakończeniu wszystkich testów
+    @AfterAll
+    static void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    public static void main(String[] args) {
+        // Nie potrzebujesz `main` do uruchamiania testów z JUnit, wystarczy zdefiniować testy.
+    }
+}
